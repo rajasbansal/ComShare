@@ -22,7 +22,9 @@ var Schema = mongoose.Schema;
 var SomeModelSchema = new Schema({
     username: String,
     password: String,
-    points: Number
+    firstname: String,
+    lastname: String,
+    points: {type: String, default: 1200}
 });
 var SomeModel = mongoose.model('SomeModel', SomeModelSchema );
 SomeModel.create({ username: 'also_awesome', password: 'check' }, function (err, awesome_instance) {
