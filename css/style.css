@@ -21,7 +21,7 @@ body {
     font-family: 'Rokkitt';
 }
 
-.btn .register:hover{
+.btn .register .hover{
     color : #ffffff !important;
 }
 
@@ -34,6 +34,12 @@ section {
 a {
     text-decoration: none;
 }
+
+th, td{
+    text-align: center;
+}
+
+
 canvas{
     display: block;
     vertical-align:bottom;
@@ -55,7 +61,7 @@ canvas{
 }
 
 .post-page{
-    display: none;
+    /*display: none;*/
 }
 
 /* Header */
@@ -136,7 +142,7 @@ canvas{
     margin: auto;
     text-align: center;
     width: 50%;
-    /*display: none;*/
+    display: none;
 }
 
 .login-page .login-form label {
