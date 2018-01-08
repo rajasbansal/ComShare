@@ -2,6 +2,7 @@ var express = require('express'), // Get the module,
     app = express(), // Create express by calling the prototype in var express,
     http = require('http').Server(app),
     io = require('socket.io')(http),
+    mongoose = require('mongoose'),
     connected_clients = [],
     waiting_clients = [],
     logged_clients = [],
@@ -9,7 +10,23 @@ var express = require('express'), // Get the module,
     status;
 
 const PORT = process.env.PORT || 7000;
+mongoose.connect('mongodb://localhost:27017/comshare', {
+  useMongoClient: true
+});
+mongoose.Promise = global.Promise;
+var db = mongoose.connection;
+var Schema = mongoose.Schema;
 
+var SomeModelSchema = new Schema({
+    username: String,
+    password: String,
+    points: Number
+});
+var SomeModel = mongoose.model('SomeModel', SomeModelSchema );
+
+SomeModel.create({ username: 'also_awesome' }, function (err, awesome_instance) {
+  if (err) return handleError(err);
+});
 app.get('/', function (req, res) {
     res.sendFile(__dirname + '/index.html');
 });
