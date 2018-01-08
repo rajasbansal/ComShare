@@ -1,0 +1,23 @@
+{
+  "name": "sendata",
+  "version": "0.0.1",
+  "description": "Simple tool for sending file in an Intranet environment",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/devclub-iitd/sendata.git"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.2",
+    "grunt": "^1.0.1",
+    "socket.io": "^2.0.4",
+    "webrtc-adapter": "^6.0.3"
+  },
+  "engines": {
+    "node": ">=6.11.1"
+  }
+}
