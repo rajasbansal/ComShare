@@ -49,6 +49,9 @@ app.post('/check', function(req,res){
             });
     // res.json({data : "yes"});
 });
+app.post('/signup',function(req,res){
+    
+});
 app.get('/', function (req, res) {
     res.sendFile(__dirname + '/index.html');
 });
