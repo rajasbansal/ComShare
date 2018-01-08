@@ -151,6 +151,24 @@ canvas{
     outline-width: 0;
 }
 
+.login-page .login-form .passwordInput {
+    border: 1px solid #ccc;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    font-size: 150%;
+    padding: 15px;
+    width: 60%;
+    color: black;
+    position: relative;
+    margin-top: 100px;
+}
+
+.login-page .login-form .passwordInput:focus {
+    border: 1px solid #999;
+    outline-width: 0;
+}
+
 .alert-username{
     display: none;
 }

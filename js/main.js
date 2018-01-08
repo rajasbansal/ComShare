@@ -3,6 +3,7 @@ $(function () {
     var $mainContent = $('.main-content'), // which contains userlist and search functionality
         username = '', // variable to store username entered.
         $usernameInput = $('.usernameInput'), // Input for username
+        $passwordInput = $('.passwordInput'), // Input for username
         $loginPage = $('.login-page'), // the login form area
         $window = $(window),
         $homePage = $('.home-page'), // home page
@@ -71,6 +72,8 @@ $(function () {
         if (event.which === 13) {
             event.preventDefault();
             username = cleanInput($usernameInput.val().trim()); // trim is to remove extra blank spaces
+            password = cleanInput($passwordInput.val().trim()); // trim is to remove extra blank spaces
+            
             $('#welcomeLine').html('Welcome ' + username + ' !');
 
             socket.emit('login', username); //This sends a request to login with certain username

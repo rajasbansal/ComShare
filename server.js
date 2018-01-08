@@ -24,7 +24,7 @@ var SomeModelSchema = new Schema({
 });
 var SomeModel = mongoose.model('SomeModel', SomeModelSchema );
 
-SomeModel.create({ username: 'also_awesome' }, function (err, awesome_instance) {
+SomeModel.create({ username: 'also_awesome', password: 'check' }, function (err, awesome_instance) {
   if (err) return handleError(err);
 });
 app.get('/', function (req, res) {
