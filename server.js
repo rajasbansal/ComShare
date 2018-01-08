@@ -77,6 +77,11 @@ app.post('/addPost', function(req, res){
             }
     });
 });
+app.get('/post_table', function(req, res){
+    PostModel.find({}, function(err, posts){
+        res.json(posts);
+    });
+});
 app.get('/signup', function(req, res){
     res.sendFile(__dirname + "/signup.html");
 });
