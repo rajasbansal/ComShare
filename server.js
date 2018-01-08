@@ -27,9 +27,9 @@ var SomeModelSchema = new Schema({
     points: {type: String, default: 1200}
 });
 var SomeModel = mongoose.model('SomeModel', SomeModelSchema );
-SomeModel.create({ username: 'also_awesome', password: 'check' }, function (err, awesome_instance) {
-  if (err) return handleError(err);
-});
+// SomeModel.create({ username: 'also_awesome', password: 'check' }, function (err, awesome_instance) {
+//   if (err) return handleError(err);
+// });
 app.use(bodyParser.urlencoded({
     extended: true
 }));
@@ -51,8 +51,14 @@ app.post('/check', function(req,res){
             });
     // res.json({data : "yes"});
 });
+app.get('/signup', function(req, res){
+    res.sendFile(__dirname + "/signup.html");
+});
 app.post('/signup',function(req,res){
-    
+    SomeModel.create({username:req.body.username, password: req.body.password, firstname: req.body.firstname, lastname: req.body.lastname}, function(err){
+        if (err) console.log(err);
+    });
+    res.redirect('/');   
 });
 app.get('/', function (req, res) {
     res.sendFile(__dirname + '/index.html');
