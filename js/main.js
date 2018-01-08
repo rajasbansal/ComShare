@@ -6,6 +6,7 @@ $(function () {
         $passwordInput = $('.passwordInput'), // Input for username
         $loginPage = $('.login-page'), // the login form area
         $post_text = $('#post_text'),
+        $post_table = $('#post_table'),
         $window = $(window),
         $homePage = $('.home-page'), // home page
         $transferPage = $('.transfer-page'), // file transfer page
@@ -66,7 +67,6 @@ $(function () {
     $("#container div canvas").hide();
 
     $("#backLink").click(function () {
-
     });
     $('#post_button').click(function() {
         if (cleanInput($post_text.val().trim()) != ""){
@@ -77,6 +77,18 @@ $(function () {
                 data: {username: logged_in_user, post_text : cleanInput($post_text.val().trim())}
             })
         }
+    });
+    $(function(){
+        $.ajax({
+              type: "GET",
+              url: "/post_table",
+              dataType: "json"
+            })
+            .done(function(data){
+                data.forEach(function(post){
+                    $post_table.append('<tr><td width="70%">'+post.text+'</td><td>'+post.by+'</td><td>'+post.Date+'</td></tr>');
+                });
+            });
     });
     $window.keydown(function (event) {
         // When the client hits ENTER on their keyboard
