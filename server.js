@@ -1,4 +1,5 @@
 var express = require('express'), // Get the module,
+    bodyParser = require('body-parser'),
     app = express(), // Create express by calling the prototype in var express,
     http = require('http').Server(app),
     io = require('socket.io')(http),
@@ -27,6 +28,26 @@ var SomeModel = mongoose.model('SomeModel', SomeModelSchema );
 SomeModel.create({ username: 'also_awesome', password: 'check' }, function (err, awesome_instance) {
   if (err) return handleError(err);
 });
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+app.use(bodyParser.json());
+app.post('/check', function(req,res){
+    SomeModel.findOne({username: req.body.username})
+        .exec(function (err, user){
+            if (err) {
+                res.json({error: true})
+            } else if (!user){
+                res.json({error: true});
+            } else if (user.password == req.body.password){
+                res.json({error: false, authenticated: true});
+            }
+            else {
+                    res.json({error: false, authenticated: false});
+            }  
+            });
+    res.json({data : "yes"});
+});
 app.get('/', function (req, res) {
     res.sendFile(__dirname + '/index.html');
 });
@@ -34,6 +55,7 @@ app.use('/css', express.static('css'));
 app.use('/fonts', express.static('fonts'));
 app.use('/images', express.static('images'));
 app.use('/js', express.static('js'));
+
 
 http.listen(PORT, '0.0.0.0', function () {
     console.log('listening on *:' + PORT);

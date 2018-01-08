@@ -73,25 +73,42 @@ $(function () {
             event.preventDefault();
             username = cleanInput($usernameInput.val().trim()); // trim is to remove extra blank spaces
             password = cleanInput($passwordInput.val().trim()); // trim is to remove extra blank spaces
-            
-            $('#welcomeLine').html('Welcome ' + username + ' !');
-
-            socket.emit('login', username); //This sends a request to login with certain username
-
-            socket.on('login', function (status) {
-
-                if (status == 2) {
-                    $usernameInput.val("");
-                    $alertUsername_blank.fadeIn(300).delay(2000).fadeOut(300);
-                } else if (status == 1) {
-                    $usernameInput.val("");
-                    $alertUsername.fadeIn(300).delay(2000).fadeOut(300);
-                } else {
-                    $loginPage.hide();
-                    $mainContent.fadeIn();
-                    $loginPage.off('click');
+            $.ajax({
+              type: "POST",
+              url: "/check",
+              dataType: "json",
+              data: {username: username, password: password}
+            }).done (function (data) {
+              if (data.error == true){
+                alert("Username does not exist");
+              }
+              else {
+                if (data.authenticated == false){
+                    alert("password does not match");
                 }
+                else {
+                    $('#welcomeLine').html('Welcome ' + username + ' !');
+                    socket.emit('login', username); //This sends a request to login with certain username
+
+                    socket.on('login', function (status) {
+
+                        if (status == 2) {
+                            $usernameInput.val("");
+                            $alertUsername_blank.fadeIn(300).delay(2000).fadeOut(300);
+                        } else if (status == 1) {
+                            $usernameInput.val("");
+                            $alertUsername.fadeIn(300).delay(2000).fadeOut(300);
+                        } else {
+                            $loginPage.hide();
+                            $mainContent.fadeIn();
+                            $loginPage.off('click');
+                        }
+                    });
+                }
+              }
+              
             });
+            
         }
     });
 
