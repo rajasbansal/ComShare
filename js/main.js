@@ -5,6 +5,7 @@ $(function () {
         $usernameInput = $('.usernameInput'), // Input for username
         $passwordInput = $('.passwordInput'), // Input for username
         $loginPage = $('.login-page'), // the login form area
+        $post_text = $('.post_text'),
         $window = $(window),
         $homePage = $('.home-page'), // home page
         $transferPage = $('.transfer-page'), // file transfer page
@@ -18,6 +19,7 @@ $(function () {
         downloadAnchor = document.getElementById('download'),
         statusMessage = document.getElementById('status'),
         bitrateMax = 0,
+        logged_in_user,
         TURN_SERVER_IP = '127.0.0.1',
         offers_for_me = [],
         configuration = {
@@ -66,7 +68,16 @@ $(function () {
     $("#backLink").click(function () {
 
     });
-
+    $('#post_button').click(function() {
+        if (cleanInput($post_text.val().trim()) != ""){
+            $.ajax({
+                type: "POST",
+                url: "/addPost",
+                dataType: "json",
+                data: {username: logged_in_user, post_text : cleanInput($post_text.val().trim())}
+            })
+        }
+    });
     $window.keydown(function (event) {
         // When the client hits ENTER on their keyboard
         if (event.which === 13) {
@@ -87,6 +98,7 @@ $(function () {
                     alert("password does not match");
                 }
                 else {
+                    logged_in_user = username;
                     $('#welcomeLine').html('Welcome ' + username + ' !');
                     socket.emit('login', username); //This sends a request to login with certain username
 

@@ -27,6 +27,16 @@ var SomeModelSchema = new Schema({
     points: {type: String, default: 1200}
 });
 var SomeModel = mongoose.model('SomeModel', SomeModelSchema );
+var posts = new Schema({
+    by: String,
+    text: String,
+    points: Number,
+    Date: {
+        type: Date,
+        default: Date.now
+    }
+});
+var PostModel = mongoose.model('PostModel', posts);
 // SomeModel.create({ username: 'also_awesome', password: 'check' }, function (err, awesome_instance) {
 //   if (err) return handleError(err);
 // });
@@ -50,6 +60,22 @@ app.post('/check', function(req,res){
             }  
             });
     // res.json({data : "yes"});
+});
+app.post('/addPost', function(req, res){
+    SomeModel.findOne({username: req.body.username})
+        .exec(function(err, user){
+            points = 0;
+            if (err) {
+                console.log(err);
+            } else if (!user){
+                console.log("No user?");
+            } else{
+                points = user.points;
+                PostModel.create({by: req.body.username, text: req.body.post_text, points: points}, function(err){
+                    if (err) console.log(err);
+                });
+            }
+    });
 });
 app.get('/signup', function(req, res){
     res.sendFile(__dirname + "/signup.html");
