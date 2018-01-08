@@ -5,7 +5,7 @@ $(function () {
         $usernameInput = $('.usernameInput'), // Input for username
         $passwordInput = $('.passwordInput'), // Input for username
         $loginPage = $('.login-page'), // the login form area
-        $post_text = $('.post_text'),
+        $post_text = $('#post_text'),
         $window = $(window),
         $homePage = $('.home-page'), // home page
         $transferPage = $('.transfer-page'), // file transfer page
