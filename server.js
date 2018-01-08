@@ -16,6 +16,7 @@ mongoose.connect('mongodb://localhost:27017/comshare', {
 });
 mongoose.Promise = global.Promise;
 var db = mongoose.connection;
+db.dropDatabase();
 var Schema = mongoose.Schema;
 
 var SomeModelSchema = new Schema({
@@ -24,7 +25,6 @@ var SomeModelSchema = new Schema({
     points: Number
 });
 var SomeModel = mongoose.model('SomeModel', SomeModelSchema );
-
 SomeModel.create({ username: 'also_awesome', password: 'check' }, function (err, awesome_instance) {
   if (err) return handleError(err);
 });
@@ -43,10 +43,11 @@ app.post('/check', function(req,res){
                 res.json({error: false, authenticated: true});
             }
             else {
-                    res.json({error: false, authenticated: false});
+                console.log(user.password);
+                res.json({error: false, authenticated: false});
             }  
             });
-    res.json({data : "yes"});
+    // res.json({data : "yes"});
 });
 app.get('/', function (req, res) {
     res.sendFile(__dirname + '/index.html');
