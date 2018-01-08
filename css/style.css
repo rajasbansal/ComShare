@@ -54,6 +54,10 @@ canvas{
     display: none; /* Hide until user enters username*/
 }
 
+.post-page{
+    /*display: none;*/
+}
+
 /* Header */
 .page-header {
     margin-top: 0;
@@ -132,6 +136,7 @@ canvas{
     margin: auto;
     text-align: center;
     width: 50%;
+    display: none;
 }
 
 .login-page .login-form label {
