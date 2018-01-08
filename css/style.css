@@ -21,6 +21,10 @@ body {
     font-family: 'Rokkitt';
 }
 
+.btn .register:hover{
+    color : #ffffff !important;
+}
+
 section {
     margin-top: 30px;
     text-align: center;
