@@ -568,3 +568,13 @@ $(function () {
 
 
 });
+
+$('#toggle_share').click(function(){
+    $('.main-content').hide();
+    $('.post-page').show();
+});
+
+$('#toggle_post').click(function(){
+    $('.main-content').show();
+    $('.post-page').hide();
+});

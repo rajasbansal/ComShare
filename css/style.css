@@ -55,7 +55,7 @@ canvas{
 }
 
 .post-page{
-    /*display: none;*/
+    display: none;
 }
 
 /* Header */
@@ -136,7 +136,7 @@ canvas{
     margin: auto;
     text-align: center;
     width: 50%;
-    display: none;
+    /*display: none;*/
 }
 
 .login-page .login-form label {
