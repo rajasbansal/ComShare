@@ -17,7 +17,7 @@ mongoose.connect('mongodb://localhost:27017/comshare', {
 });
 mongoose.Promise = global.Promise;
 var db = mongoose.connection;
-db.dropDatabase();
+// db.dropDatabase();
 var Schema = mongoose.Schema;
 app.use(session({
   secret: 'keyboard cat',

@@ -79,6 +79,22 @@ $(function () {
             })
         }
     });
+    $(document).ready(function(){
+            $.ajax({
+              type: "GET",
+              url: "/isAuthenticated",
+              dataType: "json"
+            })
+            .done(function(data){
+                console.log(data.authenticated);
+                if (data.authenticated){
+                    authenticated = true;
+                    $('.login-page').hide();
+                    $('.main-content').show();
+                    $('.post-page').hide();
+                }
+            });
+    });
     $(function(){
         $.ajax({
               type: "GET",
@@ -89,16 +105,6 @@ $(function () {
                 data.forEach(function(post){
                     $post_table.append('<tr><td width="70%">'+post.text+'</td><td>'+post.by+'</td><td>'+post.Date.toString()+'</td></tr>');
                 });
-            });
-        $.ajax({
-              type: "GET",
-              url: "/isAuthenticated",
-              dataType: "json"
-            })
-            .done(function(data){
-                if (data.authenticated){
-                    authenticated = true;
-                }
             });
     });
     $window.keydown(function (event) {
