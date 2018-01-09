@@ -68,7 +68,7 @@ $(function () {
         var text = $chat_send.val();
         $chat_send.val("");
         socket.emit("chat_send", text);
-        alert(text);
+        // alert(text);
     });
 
     $('window.onbeforeunload').click(function (e) {
@@ -407,8 +407,21 @@ $(function () {
     });
 
     socket.on('chat_received', function(data){
-        alert(data.username);
-        alert(data.message);
+        // alert(data.username);
+        // alert(data.message);
+        // var temp_chat = $chat_box.val();
+        // $chat_box.val(temp_chat+"\n"+data.username+" : "+data.message+"\n");
+        // alert(data.username);
+        // alert(username);
+        if(data.username == username){
+            var temp_t = '<li style="text-align: right; color: #00f;">'+data.username+" : "+data.message+"</li>";
+            // alert(temp_t);
+            $chat_box.append(temp_t);
+        } else {
+            var temp_t = '<li style="text-align: left; color: #f00;">'+data.username+" : "+data.message+"</li>";
+            // alert(temp_t);
+            $chat_box.append(temp_t);
+        }
     });
     socket.on("file accepted", function () {
         //here's the sendData!
