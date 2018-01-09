@@ -12,7 +12,10 @@ var express = require('express'), // Get the module,
     status;
 
 const PORT = process.env.PORT || 7000;
-mongoose.connect('mongodb://localhost:27017/comshare', {
+// mongoose.connect('mongodb://localhost:27017/comshare', {
+//   useMongoClient: true
+// });
+mongoose.connect('mongodb://admin:admin@ds046267.mlab.com:46267/comshare', {
   useMongoClient: true
 });
 mongoose.Promise = global.Promise;
