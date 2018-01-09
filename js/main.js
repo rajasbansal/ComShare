@@ -71,6 +71,7 @@ $(function () {
     $("#backLink").click(function () {
     });
     $('#post_button').click(function() {
+        console.log($post_text.val().trim());
         if (cleanInput($post_text.val().trim()) != ""){
             $.ajax({
                 type: "POST",
@@ -79,6 +80,23 @@ $(function () {
                 data: {username: logged_in_user, post_text : cleanInput($post_text.val().trim())}
             })
         }
+    });
+    $(document).ready(function(){
+            $.ajax({
+              type: "GET",
+              url: "/isAuthenticated",
+              dataType: "json"
+            })
+            .done(function(data){
+                console.log(data.authenticated);
+                if (data.authenticated){
+                    authenticated = true;
+                    $('.login-page').hide();
+                    $('.main-content').show();
+                    $('.post-page').hide();
+                }
+            });
+            console.log($('textarea').val(""));
     });
     $(function(){
         $.ajax({
@@ -93,23 +111,15 @@ $(function () {
                     $post_table.append('<tr><td width="70%">'+post.text+'</td><td>'+post.by+'</td><td>'+date+'</td></tr>');
                 });
             });
-        $.ajax({
-              type: "GET",
-              url: "/isAuthenticated",
-              dataType: "json"
-            })
-            .done(function(data){
-                if (data.authenticated){
-                    authenticated = true;
-                }
-            });
     });
     $window.keydown(function (event) {
         // When the client hits ENTER on their keyboard
-        if (event.which === 13) {
+        console.log(document.activeElement.id);
+        if (event.which === 13 && (document.activeElement.id == "username" || document.activeElement.id == "password") ) {
             event.preventDefault();
             username = cleanInput($usernameInput.val().trim()); // trim is to remove extra blank spaces
             password = cleanInput($passwordInput.val().trim()); // trim is to remove extra blank spaces
+            // console.log(document.activeElement.id);
             $.ajax({
               type: "POST",
               url: "/check",
@@ -147,6 +157,13 @@ $(function () {
               
             });
             
+        }
+
+        else if (event.which === 13 && document.activeElement.id == "post_text" ) {
+            event.preventDefault();
+            var temps = $('#post_text').val();
+            $('#post_text').val(temps+"\n");
+            console.log(document.activeElement.id);
         }
     });
 
@@ -604,3 +621,5 @@ $('#toggle_post').click(function(){
     $('.main-content').show();
     $('.post-page').hide();
 });
+
+
