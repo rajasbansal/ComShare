@@ -20,6 +20,7 @@ $(function () {
         downloadAnchor = document.getElementById('download'),
         statusMessage = document.getElementById('status'),
         bitrateMax = 0,
+        authenticated = false,
         logged_in_user,
         TURN_SERVER_IP = '127.0.0.1',
         offers_for_me = [],
@@ -86,8 +87,18 @@ $(function () {
             })
             .done(function(data){
                 data.forEach(function(post){
-                    $post_table.append('<tr><td width="70%">'+post.text+'</td><td>'+post.by+'</td><td>'+post.Date+'</td></tr>');
+                    $post_table.append('<tr><td width="70%">'+post.text+'</td><td>'+post.by+'</td><td>'+post.Date.toString()+'</td></tr>');
                 });
+            });
+        $.ajax({
+              type: "GET",
+              url: "/isAuthenticated",
+              dataType: "json"
+            })
+            .done(function(data){
+                if (data.authenticated){
+                    authenticated = true;
+                }
             });
     });
     $window.keydown(function (event) {

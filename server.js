@@ -3,6 +3,7 @@ var express = require('express'), // Get the module,
     app = express(), // Create express by calling the prototype in var express,
     http = require('http').Server(app),
     io = require('socket.io')(http),
+    session= require('express-session'),
     mongoose = require('mongoose'),
     connected_clients = [],
     waiting_clients = [],
@@ -18,13 +19,22 @@ mongoose.Promise = global.Promise;
 var db = mongoose.connection;
 db.dropDatabase();
 var Schema = mongoose.Schema;
-
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true,
+  authenticated: false
+}));
 var SomeModelSchema = new Schema({
     username: String,
     password: String,
     firstname: String,
     lastname: String,
-    points: {type: String, default: 1200}
+    points: {type: String, default: 1200},
+    files: {
+        type: Number,
+        default: 0
+    }
 });
 var SomeModel = mongoose.model('SomeModel', SomeModelSchema );
 var posts = new Schema({
@@ -34,7 +44,8 @@ var posts = new Schema({
     Date: {
         type: Date,
         default: Date.now
-    }
+    },
+    files: Number
 });
 var PostModel = mongoose.model('PostModel', posts);
 // SomeModel.create({ username: 'also_awesome', password: 'check' }, function (err, awesome_instance) {
@@ -52,6 +63,7 @@ app.post('/check', function(req,res){
             } else if (!user){
                 res.json({error: true});
             } else if (user.password == req.body.password){
+                req.session.authenticated = true;
                 res.json({error: false, authenticated: true});
             }
             else {
@@ -76,6 +88,9 @@ app.post('/addPost', function(req, res){
                 });
             }
     });
+});
+app.get('/isAuthenticated', function (req,res) {
+    res.json(req.session);
 });
 app.get('/post_table', function(req, res){
     PostModel.find({}, function(err, posts){
