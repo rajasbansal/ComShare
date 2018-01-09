@@ -70,6 +70,7 @@ $(function () {
     $("#backLink").click(function () {
     });
     $('#post_button').click(function() {
+        console.log($post_text.val().trim());
         if (cleanInput($post_text.val().trim()) != ""){
             $.ajax({
                 type: "POST",
@@ -94,6 +95,7 @@ $(function () {
                     $('.post-page').hide();
                 }
             });
+            console.log($('textarea').val(""));
     });
     $(function(){
         $.ajax({
@@ -109,10 +111,12 @@ $(function () {
     });
     $window.keydown(function (event) {
         // When the client hits ENTER on their keyboard
-        if (event.which === 13) {
+        console.log(document.activeElement.id);
+        if (event.which === 13 && (document.activeElement.id == "username" || document.activeElement.id == "password") ) {
             event.preventDefault();
             username = cleanInput($usernameInput.val().trim()); // trim is to remove extra blank spaces
             password = cleanInput($passwordInput.val().trim()); // trim is to remove extra blank spaces
+            // console.log(document.activeElement.id);
             $.ajax({
               type: "POST",
               url: "/check",
@@ -150,6 +154,13 @@ $(function () {
               
             });
             
+        }
+
+        else if (event.which === 13 && document.activeElement.id == "post_text" ) {
+            event.preventDefault();
+            var temps = $('#post_text').val();
+            $('#post_text').val(temps+"\n");
+            console.log(document.activeElement.id);
         }
     });
 
@@ -607,3 +618,5 @@ $('#toggle_post').click(function(){
     $('.main-content').show();
     $('.post-page').hide();
 });
+
+
