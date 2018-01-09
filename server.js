@@ -138,6 +138,15 @@ io.on('connection', function (socket) {
         }
 
     });
+    socket.on('chat_send', function(message){
+        console.log(message);
+        data ={};
+        data.message = message;
+        data.username = socket.username;
+        console.log("partner "+socket.partner);
+        socket.broadcast.to(logged_clients[socket.partner]).emit("chat_received",data);
+        socket.broadcast.to(logged_clients[socket.username]).emit("chat_received",data);
+    });
 
     socket.on('disconnect', function (data) {
         // console.log(socket.partner);

@@ -8,6 +8,9 @@ $(function () {
         $post_text = $('#post_text'),
         $post_table = $('#post_table'),
         $window = $(window),
+        $chat_btn = $('#chat_btn'),
+        $chat_box = $('#chat_box'),
+        $chat_send = $('#chat_send'),
         $homePage = $('.home-page'), // home page
         $transferPage = $('.transfer-page'), // file transfer page
         $userRequest = $('#user-requests'), // sidebar to accept or deny a connection
@@ -61,6 +64,12 @@ $(function () {
         prevprogress = 0;
 
     $("#download").hide();
+    $chat_btn.click(function() {
+        var text = $chat_send.val();
+        $chat_send.val("");
+        socket.emit("chat_send", text);
+        alert(text);
+    });
 
     $('window.onbeforeunload').click(function (e) {
         e.preventDefault();
@@ -329,7 +338,7 @@ $(function () {
             ExchangerUsername = null; // else set ExchangeUsername to None
         }
     });
-
+    
     socket.on("session-desc", function (message) {
         console.log("session-desc received");
         myPeerConn.setRemoteDescription(message.sdp).then(function () {
@@ -397,6 +406,10 @@ $(function () {
         sender = false;
     });
 
+    socket.on('chat_received', function(data){
+        alert(data.username);
+        alert(data.message);
+    });
     socket.on("file accepted", function () {
         //here's the sendData!
         console.log("trying to send")
