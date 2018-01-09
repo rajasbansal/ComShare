@@ -70,34 +70,71 @@ $(function () {
 
     $("#backLink").click(function () {
     });
+
+
+    $('#post_refresh').click(function(){
+        $.ajax({
+              type: "GET",
+              url: "/post_table",
+              dataType: "json"
+            })
+            .done(function(data){
+                // console.log($post_table.html());
+                $("#post_table").html("");
+                data.forEach(function(post){
+                    date = new Date(post.Date.toString());
+                    // console.log(date);
+                    $post_table.append('<tr><td width="60%">'+post.text+'</td><td width="20%">'+post.by+'</td><td style="font-size:1vw; word-wrap: break-word;" width="20%">'+date+'</td></tr>');
+                });
+            });
+    });
+
     $('#post_button').click(function() {
-        console.log($post_text.val().trim());
+        // console.log($post_text.val().trim());
         if (cleanInput($post_text.val().trim()) != ""){
             $.ajax({
                 type: "POST",
                 url: "/addPost",
                 dataType: "json",
                 data: {username: logged_in_user, post_text : cleanInput($post_text.val().trim())}
-            })
+            });
         }
+        // var temps = $('#post_text').val();
+        $('#post_text').val("");
+        $.ajax({
+          type: "GET",
+          url: "/post_table",
+          dataType: "json"
+        })
+        .done(function(data){
+            // console.log($post_table.html());
+            $("#post_table").html("");
+            data.forEach(function(post){
+                date = new Date(post.Date.toString());
+                // console.log(date);
+                $post_table.append('<tr><td width="60%">'+post.text+'</td><td width="20%">'+post.by+'</td><td style="font-size:1vw; word-wrap: break-word;" width="20%">'+date+'</td></tr>');
+            });
+        });
     });
-    // $(document).ready(function(){
-    //         $.ajax({
-    //           type: "GET",
-    //           url: "/isAuthenticated",
-    //           dataType: "json"
-    //         })
-    //         .done(function(data){
-    //             console.log(data.authenticated);
-    //             if (data.authenticated){
-    //                 authenticated = true;
-    //                 $('.login-page').hide();
-    //                 $('.main-content').show();
-    //                 $('.post-page').hide();
-    //             }
-    //         });
-    //         console.log($('textarea').val(""));
-    // });
+    $(document).ready(function(){
+            // $.ajax({
+            //   type: "GET",
+            //   url: "/isAuthenticated",
+            //   dataType: "json"
+            // })
+            // .done(function(data){
+            //     console.log(data.authenticated);
+            //     if (data.authenticated){
+            //         authenticated = true;
+            //         $('.login-page').hide();
+            //         $('.main-content').show();
+            //         $('.post-page').hide();
+            //     }
+            // });
+            // console.log($('textarea').val(""));
+            // var temps = $('#post_text').val();
+            $('#post_text').val("");
+    });
     $(function(){
         $.ajax({
               type: "GET",
@@ -107,14 +144,14 @@ $(function () {
             .done(function(data){
                 data.forEach(function(post){
                     date = new Date(post.Date.toString());
-                    console.log(date);
+                    // console.log(date);
                     $post_table.append('<tr><td width="60%">'+post.text+'</td><td width="20%">'+post.by+'</td><td style="font-size:1vw; word-wrap: break-word;" width="20%">'+date+'</td></tr>');
                 });
             });
     });
     $window.keydown(function (event) {
         // When the client hits ENTER on their keyboard
-        console.log(document.activeElement.id);
+        // console.log(document.activeElement.id);
         if (event.which === 13 && (document.activeElement.id == "username" || document.activeElement.id == "password") ) {
             event.preventDefault();
             username = cleanInput($usernameInput.val().trim()); // trim is to remove extra blank spaces
@@ -163,7 +200,7 @@ $(function () {
             event.preventDefault();
             var temps = $('#post_text').val();
             $('#post_text').val(temps+"\n");
-            console.log(document.activeElement.id);
+            // console.log(document.activeElement.id);
         }
     });
 
@@ -621,5 +658,4 @@ $('#toggle_post').click(function(){
     $('.main-content').show();
     $('.post-page').hide();
 });
-
 
