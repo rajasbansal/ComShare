@@ -3,7 +3,7 @@ var express = require('express'), // Get the module,
     app = express(), // Create express by calling the prototype in var express,
     http = require('http').Server(app),
     io = require('socket.io')(http),
-    session= require('express-session'),
+    // session= require('express-session'),
     mongoose = require('mongoose'),
     connected_clients = [],
     waiting_clients = [],
@@ -20,12 +20,12 @@ var db = mongoose.connection;
 //db.dropDatabase();
 
 var Schema = mongoose.Schema;
-app.use(session({
-  secret: 'keyboard cat',
-  resave: false,
-  saveUninitialized: true,
-  authenticated: false
-}));
+// app.use(session({
+//   secret: 'keyboard cat',
+//   resave: false,
+//   saveUninitialized: true,
+//   authenticated: false
+// }));
 var SomeModelSchema = new Schema({
     username: String,
     password: String,
@@ -64,7 +64,7 @@ app.post('/check', function(req,res){
             } else if (!user){
                 res.json({error: true});
             } else if (user.password == req.body.password){
-                req.session.authenticated = true;
+                // req.session.authenticated = true;
                 res.json({error: false, authenticated: true});
             }
             else {
@@ -90,9 +90,9 @@ app.post('/addPost', function(req, res){
             }
     });
 });
-app.get('/isAuthenticated', function (req,res) {
-    res.json(req.session);
-});
+// app.get('/isAuthenticated', function (req,res) {
+//     res.json(req.session);
+// });
 app.get('/post_table', function(req, res){
     PostModel.find({}, function(err, posts){
         res.json(posts);

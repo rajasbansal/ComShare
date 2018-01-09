@@ -81,23 +81,23 @@ $(function () {
             })
         }
     });
-    $(document).ready(function(){
-            $.ajax({
-              type: "GET",
-              url: "/isAuthenticated",
-              dataType: "json"
-            })
-            .done(function(data){
-                console.log(data.authenticated);
-                if (data.authenticated){
-                    authenticated = true;
-                    $('.login-page').hide();
-                    $('.main-content').show();
-                    $('.post-page').hide();
-                }
-            });
-            console.log($('textarea').val(""));
-    });
+    // $(document).ready(function(){
+    //         $.ajax({
+    //           type: "GET",
+    //           url: "/isAuthenticated",
+    //           dataType: "json"
+    //         })
+    //         .done(function(data){
+    //             console.log(data.authenticated);
+    //             if (data.authenticated){
+    //                 authenticated = true;
+    //                 $('.login-page').hide();
+    //                 $('.main-content').show();
+    //                 $('.post-page').hide();
+    //             }
+    //         });
+    //         console.log($('textarea').val(""));
+    // });
     $(function(){
         $.ajax({
               type: "GET",
