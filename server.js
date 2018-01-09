@@ -5,6 +5,7 @@ var express = require('express'), // Get the module,
     io = require('socket.io')(http),
     session= require('express-session'),
     mongoose = require('mongoose'),
+    date = require('date-and-time'),
     connected_clients = [],
     waiting_clients = [],
     logged_clients = [],
@@ -17,7 +18,7 @@ mongoose.connect('mongodb://localhost:27017/comshare', {
 });
 mongoose.Promise = global.Promise;
 var db = mongoose.connection;
-db.dropDatabase();
+//db.dropDatabase();
 var Schema = mongoose.Schema;
 app.use(session({
   secret: 'keyboard cat',

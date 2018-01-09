@@ -24,6 +24,7 @@ $(function () {
         logged_in_user,
         TURN_SERVER_IP = '127.0.0.1',
         offers_for_me = [],
+        date,
         configuration = {
             //Needed for RTCPeerConnection
             'iceServers': [
@@ -87,7 +88,9 @@ $(function () {
             })
             .done(function(data){
                 data.forEach(function(post){
-                    $post_table.append('<tr><td width="70%">'+post.text+'</td><td>'+post.by+'</td><td>'+post.Date.toString()+'</td></tr>');
+                    date = new Date(post.Date.toString());
+                    console.log(date);
+                    $post_table.append('<tr><td width="70%">'+post.text+'</td><td>'+post.by+'</td><td>'+date+'</td></tr>');
                 });
             });
         $.ajax({
