@@ -186,7 +186,7 @@ $(function () {
                 }
                 else {
                     logged_in_user = username;
-                    $('#welcomeLine').html('Welcome ' + username + ' !');
+                    $('#welcomeLine').html('Welcome ' + username + ' ! <button onclick="profileButton(this.id)" type="button" style="margin:0vw;" class="profile_btn btn online-user" id="'+username+'">View Your Profile</button> ');
                     socket.emit('login', username); //This sends a request to login with certain username
 
                     socket.on('login', function (status) {
