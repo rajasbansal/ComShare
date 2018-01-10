@@ -255,6 +255,12 @@ $(function () {
                 lastModifiedDate: file.lastModifiedDate
             }
         });
+        $.ajax({
+          type: "POST", 
+          url: "/pointsUpdate",
+          dataType: "json",
+          data: {username: username, to: ExchangerUsername}
+        });
     });
 
     $(document).on('click', '.online-user', function () {

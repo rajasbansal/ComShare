@@ -97,12 +97,45 @@ app.post('/addPost', function(req, res){
 //     res.json(req.session);
 // });
 app.get('/post_table', function(req, res){
-    PostModel.find({}, function(err, posts){
+    PostModel.find({})
+    .sort({posts: 1})
+    .exec(function(err, posts){
+        posts.sort(compare);
         res.json(posts);
     });
 });
 app.get('/signup', function(req, res){
     res.sendFile(__dirname + "/signup.html");
+});
+app.post('/pointsUpdate', function(req, res){
+    console.log('User'+req.body.username+",, to "+ req.body.to);
+    SomeModel.findOne({username: req.body.username}, function(err,user){
+        if (err) console.log(err);
+        else if (user){
+            console.log('reached 1');
+            SomeModel.findOne({username: req.body.to}, function(err, to){
+                if (err) console.log(err);
+                else if (to){
+                    console.log('reached 2');
+                    var points1 = parseInt(user.points);
+                    var points2 = parseInt(to.points);
+                    var ex1 = 1/(1 + 10**((points1-points2)/400));
+                    var ex2 = 1/(1 + 10**((points2-points1)/400));
+                    var newpoints1 = points1 + 100*(1 - ex1);
+                    var newpoints2 = points2 + 100*(0 - ex1);
+                    var newfiles = user.files + 1;
+                    SomeModel.update({username: req.body.username},{points: newpoints1, files: newfiles}, function(err,raw){
+                        console.log(raw);
+                        SomeModel.update({username: req.body.to},{points: newpoints2}, function(err, raw){
+                            console.log(raw);
+                        });
+                    });
+                    console.log(newpoints1);
+                    console.log(newpoints2);
+                }
+            });
+        }
+    });
 });
 app.post('/signup',function(req,res){
     SomeModel.create({username:req.body.username, password: req.body.password, firstname: req.body.firstname, lastname: req.body.lastname}, function(err){
@@ -377,4 +410,11 @@ function removeA(arr) {
         }
     }
     return arr;
+}
+function compare(a,b){
+    var x = parseInt(a.points);
+    var y = parseInt(b.points);
+    if (x>y) return -1;
+    else if (x<y) return +1;
+    else return 0;
 }
