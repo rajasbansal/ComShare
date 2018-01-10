@@ -70,9 +70,13 @@ canvas{
 
 .profile_h3{
     text-align: left; 
+    font-size: 1.6vw;
+    line-height: 1.6vw;
+    margin: 0.7vw;
 }
 
 #profile_pic{
+    padding: 0vw;
     padding-right: 6vw;
 }
 
