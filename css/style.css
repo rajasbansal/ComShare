@@ -64,6 +64,18 @@ canvas{
     display: none;
 }
 
+.profile-page{
+    /*display: none;*/
+}
+
+.profile_h3{
+    text-align: left; 
+}
+
+#profile_pic{
+    padding-right: 6vw;
+}
+
 /* Header */
 .page-header {
     margin-top: 0;
@@ -142,7 +154,7 @@ canvas{
     margin: auto;
     text-align: center;
     width: 50%;
-    /*display: none;*/
+    display: none;
 }
 
 .login-page .login-form label {
