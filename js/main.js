@@ -67,7 +67,9 @@ $(function () {
     $chat_btn.click(function() {
         var text = $chat_send.val();
         $chat_send.val("");
-        socket.emit("chat_send", text);
+        if(text.trim() != "" ){
+            socket.emit("chat_send", text);
+        }
         // alert(text);
     });
 
@@ -719,3 +721,10 @@ function profileButton(id){
       $('#profile_pn').html("<b>Points</b> : "+Math.round(data.points));
     });
 };
+
+$('#profile_back').click(function(){
+    $('.main-content').show();
+    $('.post-page').hide();
+    $('.login-page').hide();
+    $('.profile-page').hide();
+});
