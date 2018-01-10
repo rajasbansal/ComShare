@@ -1,68 +1,24 @@
-# SenData
+# ComShare
 
-## What is it all about?
-SenData is a simple tool for sharing files at a high speed, aimed at an intranet environment without any external software. It is based to run simply using your internet browser.
+## About
+This web app aims at building a community inside any local area network for sharing movies,music and other files along with books and other things that can be shared with people on or off wires. It is complete with chatting and posting functionality. A user can post his need on a forum which everybody can view. On creation, each user is given a starting point value of 1200 which can increase as the file sharing goes on. Posts are ordered according to the points of the user who posted his need, and so the need of an active sharer is put at the top. Points are distributed on the basis of Elo Rating system thus providing an incentive for people to share more (their needs are at the top of the posts section and lower rated people get greater benefits by sharing with them). They can also dicuss about movies and give suggestions to each other. 
 
-### Technology used
-The website is hosted on serber using nodeJs.
-
-To signal messages and metadata between browsers, socket.io is used.
-
-WebRTC is used to initiate a peer to peer connection between browsers and to send the file as a blob.
 
 -----------------------------------------------------------------------------------------
+## Requirements
+1. Need to have Node.js installed
+2. npm
+
 
 ## Getting Started: 
-1. Install Nodejs on your computer.
-2. Go to the directory of the project in command prompt and run "npm install".
-3. Run "node server.js". 
-4. Open http://localhost:3001. 
-
-For local testing (sender-receiver on same pc, but different browser tabs), the above mentioned steps are observed to be working correctly. 
-
-Otherwise, a TURN server might be required. For this purpose, install and run coturn. The commands are-
-
-```bash
-sudo apt-get install coturn
-```
-
-For running the server-
-
-```bash
-sudo turnserver -a -o -v -n  --no-dtls --no-tls -u test:test -r "someRealm"
-turnserver -v
-```
-
-(Taken from https://stackoverflow.com/questions/22233980/implementing-our-own-stun-turn-server-for-webrtc-application)
-
-After doing this, in js/main.js file, change the value of TURN_SERVER_IP variable to your turn server ip address.\
-
-
-FOR IITD intranet 
-the following steps are observed to work on Ubuntu (to run npm install --save)
-
-1.for npm
-
-```bash
-sudo npm config set proxy http://proxy22.iitd.ac.in:3128 -g
-sudo npm config set https-proxy http://proxy22.iitd.ac.in:3128 -g
-```
-
-2.Secondary Fix(If above does not work)
-
-```bash
-sudo npm config set strict-ssl false -g
-sudo npm config set registry "http://registry.npmjs.org/" -g
-```
-
+1. Get a copy of the source by cloning it downloading a zip.
+2. Navigate to the root.
+3. Install the required packages and run the server.
+4. ```bash
+	npm install
+	node server.js
+   ```
+5. Navigate to (http://localhost:7000/)
 
 -------------------------------------------------------------------------------------------------------------------------------------------
 
-# TODO List
-1. Increase and test speed of file sending.
-2. Decrease site loading time.
-3. Increase maximum limit of size of file that can be sent.
-4. Set up functionality to send multiple files at once.
-
-# Bugs List
-~~1. Blob initiation on receving with Chrome not working.~~
