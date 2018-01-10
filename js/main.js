@@ -154,7 +154,7 @@ $(function () {
                 data.forEach(function(post){
                     date = new Date(post.Date.toString());
                     // console.log(date);
-                    $post_table.append('<tr><td width="60%">'+post.text+'</td><td width="20%">'+post.by+'</td><td style="font-size:1vw; word-wrap: break-word;" width="20%">'+date+'</td></tr>');
+                    $post_table.append('<tr><td width="40%">'+post.text+'</td><td width="20%">'+post.by+'</td><td width="20%">'+post.points+'</td><td style="font-size:1vw; word-wrap: break-word;" width="20%">'+date+'</td></tr>');
                 });
             });
     });
