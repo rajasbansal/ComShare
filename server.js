@@ -18,6 +18,7 @@ const PORT = process.env.PORT || 7000;
 mongoose.connect('mongodb://admin:admin@ds046267.mlab.com:46267/comshare', {
   useMongoClient: true
 });
+//mongodb client
 mongoose.Promise = global.Promise;
 var db = mongoose.connection;
 //db.dropDatabase();
@@ -40,7 +41,9 @@ var SomeModelSchema = new Schema({
         default: 0
     }
 });
+//schema 
 var SomeModel = mongoose.model('SomeModel', SomeModelSchema );
+// our model
 var posts = new Schema({
     by: String,
     text: String,
