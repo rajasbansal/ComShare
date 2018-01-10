@@ -107,6 +107,14 @@ app.get('/post_table', function(req, res){
 app.get('/signup', function(req, res){
     res.sendFile(__dirname + "/signup.html");
 });
+app.post('/details', function(req,res){
+    SomeModel.findOne({username: req.body.username}, function(err, user){
+        if (err) console.log(err);
+        else {
+            res.json(user);
+        }
+    });
+});
 app.post('/pointsUpdate', function(req, res){
     console.log('User'+req.body.username+",, to "+ req.body.to);
     SomeModel.findOne({username: req.body.username}, function(err,user){
