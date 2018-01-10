@@ -320,10 +320,23 @@ $(function () {
             if (online_users[i] === username) {
                 continue;
             } else {
-                html += '<div class="user"><button type="button" class="btn btn-default btn-block online-user" data-toggle="modal" data-target="#waiting_message">' + online_users[i] + '</button> </div>';
+                html += '<div class="user"><button style="width:60%; margin:0vw;" type="button" class="btn btn-default online-user" data-toggle="modal" data-target="#waiting_message">' + online_users[i] + '</button> <button type="button" style="width:39%; margin:0vw;" class="profile_btn btn btn-default online-user" id="'+online_users[i]+'">View Profile</button></div>';
             }
         }
         $listOfUsers.html(html);
+    });
+
+    $('.profile_btn').click(function(){
+        var temp_user = $(this).id();
+        console.log(temp_user);
+        $.ajax({
+          type: "POST",
+          url: "/details",
+          dataType: "json",
+          data: {username: temp_user}
+        }).done (function (data) {
+          console.log(temp_user);
+        });
     });
 
     socket.on("answer", function (msg) {
