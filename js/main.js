@@ -320,23 +320,10 @@ $(function () {
             if (online_users[i] === username) {
                 continue;
             } else {
-                html += '<div class="user"><button style="width:60%; margin:0vw;" type="button" class="btn btn-default online-user" data-toggle="modal" data-target="#waiting_message">' + online_users[i] + '</button> <button type="button" style="width:39%; margin:0vw;" class="profile_btn btn btn-default online-user" id="'+online_users[i]+'">View Profile</button></div>';
+                html += '<div class="user"><button style="width:60%; margin:0vw;" type="button" class="btn btn-default online-user" data-toggle="modal" data-target="#waiting_message">' + online_users[i] + '</button> <button onclick="profileButton(this.id)" type="button" style="width:39%; margin:0vw;" class="profile_btn btn btn-default online-user" id="'+online_users[i]+'">View Profile</button></div>';
             }
         }
         $listOfUsers.html(html);
-    });
-
-    $('.profile_btn').click(function(){
-        var temp_user = $(this).id();
-        console.log(temp_user);
-        $.ajax({
-          type: "POST",
-          url: "/details",
-          dataType: "json",
-          data: {username: temp_user}
-        }).done (function (data) {
-          console.log(temp_user);
-        });
     });
 
     socket.on("answer", function (msg) {
@@ -710,3 +697,25 @@ $('#toggle_post').click(function(){
     $('.post-page').hide();
 });
 
+
+function profileButton(id){
+    // alert("AYUSH");
+    // var temp_user = $(this).id();
+    // alert(id);
+    $.ajax({
+      type: "POST",
+      url: "/details",
+      dataType: "json",
+      data: {username: id}
+    }).done (function (data) {
+      $('.main-content').hide();
+      $('.post-page').hide();
+      $('.login-page').hide();
+      $('.profile-page').show();
+      $('#profile_fn').html("<b>First Name</b> : "+data.firstname);
+      $('#profile_ln').html("<b>Last Name</b> : "+data.lastname);
+      $('#profile_un').html("<b>Username</b> : "+data.username);
+      $('#profile_cn').html("<b>Contribution (No. of Files)</b> : "+data.files);
+      $('#profile_pn').html("<b>Points</b> : "+Math.round(data.points));
+    });
+};
