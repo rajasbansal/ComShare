@@ -95,7 +95,7 @@ $(function () {
                 data.forEach(function(post){
                     date = new Date(post.Date.toString());
                     // console.log(date);
-                    $post_table.append('<tr><td width="60%">'+post.text+'</td><td width="20%">'+post.by+'</td><td style="font-size:1vw; word-wrap: break-word;" width="20%">'+date+'</td></tr>');
+                    $post_table.append('<tr><td width="40%">'+post.text+'</td><td width="20%">'+post.by+'</td><td width="20%">'+Math.round(post.points)+'</td><td style="font-size:1vw; word-wrap: break-word;" width="20%">'+date+'</td></tr>');
                 });
             });
     });
@@ -108,24 +108,27 @@ $(function () {
                 url: "/addPost",
                 dataType: "json",
                 data: {username: logged_in_user, post_text : cleanInput($post_text.val().trim())}
+            }).done(function(data){
+                $.ajax({
+                  type: "GET",
+                  url: "/post_table",
+                  dataType: "json"
+                })
+                .done(function(data){
+                    // console.log($post_table.html());
+                    $("#post_table").html("");
+                    data.forEach(function(post){
+                        date = new Date(post.Date.toString());
+                        // console.log(date);
+                            $post_table.append('<tr><td width="40%">'+post.text+'</td><td width="20%">'+post.by+'</td><td width="20%">'+Math.round(post.points)+'</td><td style="font-size:1vw; word-wrap: break-word;" width="20%">'+date+'</td></tr>');
+                    });
+                });
             });
         }
         // var temps = $('#post_text').val();
         $('#post_text').val("");
-        $.ajax({
-          type: "GET",
-          url: "/post_table",
-          dataType: "json"
-        })
-        .done(function(data){
-            // console.log($post_table.html());
-            $("#post_table").html("");
-            data.forEach(function(post){
-                date = new Date(post.Date.toString());
-                // console.log(date);
-                $post_table.append('<tr><td width="60%">'+post.text+'</td><td width="20%">'+post.by+'</td><td style="font-size:1vw; word-wrap: break-word;" width="20%">'+date+'</td></tr>');
-            });
-        });
+        $('#post_refresh').click();
+
     });
     $(document).ready(function(){
             // $.ajax({
@@ -190,9 +193,11 @@ $(function () {
 
                         if (status == 2) {
                             $usernameInput.val("");
+                            $passwordInput.val("");
                             $alertUsername_blank.fadeIn(300).delay(2000).fadeOut(300);
                         } else if (status == 1) {
                             $usernameInput.val("");
+                            $passwordInput.val("");
                             $alertUsername.fadeIn(300).delay(2000).fadeOut(300);
                         } else {
                             $loginPage.hide();
