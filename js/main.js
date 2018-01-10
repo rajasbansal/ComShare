@@ -154,7 +154,7 @@ $(function () {
                 data.forEach(function(post){
                     date = new Date(post.Date.toString());
                     // console.log(date);
-                    $post_table.append('<tr><td width="40%">'+post.text+'</td><td width="20%">'+post.by+'</td><td width="20%">'+post.points+'</td><td style="font-size:1vw; word-wrap: break-word;" width="20%">'+date+'</td></tr>');
+                    $post_table.append('<tr><td width="40%">'+post.text+'</td><td width="20%">'+post.by+'</td><td width="20%">'+Math.round(post.points)+'</td><td style="font-size:1vw; word-wrap: break-word;" width="20%">'+date+'</td></tr>');
                 });
             });
     });
@@ -209,6 +209,11 @@ $(function () {
             event.preventDefault();
             var temps = $('#post_text').val();
             $('#post_text').val(temps+"\n");
+            // console.log(document.activeElement.id);
+        }
+        else if (event.which === 13 && document.activeElement.id == "chat_send" ) {
+            event.preventDefault();
+            $("#chat_btn").click();
             // console.log(document.activeElement.id);
         }
     });
@@ -460,6 +465,7 @@ $(function () {
     socket.on("PartnerDisconnected", function () {
         //stop transfer or show dialog that partner has been disconnected retry from main page
         console.log("Partner disconnected");
+        $('#chat_box').html("");
         alert("Your partner has disconnected");
         cancel_connection();
     });

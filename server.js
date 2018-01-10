@@ -121,8 +121,8 @@ app.post('/pointsUpdate', function(req, res){
                     var points2 = parseInt(to.points);
                     var ex1 = 1/(1 + 10**((points1-points2)/400));
                     var ex2 = 1/(1 + 10**((points2-points1)/400));
-                    var newpoints1 = points1 + 100*(1 - ex1);
-                    var newpoints2 = points2 + 100*(0 - ex1);
+                    var newpoints1 = Math.round(points1 + 100*(1 - ex1));
+                    var newpoints2 = Math.round(points2 + 100*(0 - ex1));
                     var newfiles = user.files + 1;
                     SomeModel.update({username: req.body.username},{points: newpoints1, files: newfiles}, function(err,raw){
                         console.log(raw);
